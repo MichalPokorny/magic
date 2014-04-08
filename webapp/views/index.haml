@@ -1,0 +1,71 @@
+!!! 5
+%html
+  %head
+    %title KSP Noční megahra
+    %link{rel: :stylesheet, href: '/css/bootstrap.min.css'}
+  %body
+    .container-narrow
+      .header
+        %h1 KSP Noční megahra
+
+      - if custom_reply || reply
+        .col-lg-12
+          - if custom_reply
+            %h3 Jak to dopadlo?
+            %pre= custom_reply
+          - if reply
+            %h3 Odpověď robota:
+            %pre= reply
+
+      .col-lg-6
+        %h3 Testování řešení
+        %p
+          Zde můžete posílat k vyhodnocení své vyřešené úlohy.
+          Vyzkoušíme, jestli dělají, co mají, a pak řekneme, jak se nám líbily.
+        %p
+          Počítání výsledků může chvíli trvat.
+        %p
+          Telefonní číslo SMS rozhraní je 603 571 570. Formát SMS je
+          <kbd>KOD [identifikátor] [zdrojový kód]</kbd>.
+
+        %form{method: :get, action: '/'}
+          %div.input-group
+            %label{for: :code} Identifikátor úlohy:
+            %input{class: 'form-control', type: :text, name: :code, value: code}
+
+          %div
+            %label{for: :source} Zdroják:
+
+          %textarea{class: 'form-control', name: :source}
+            = source
+
+          %div
+            %input{class: 'btn btn-large btn-success', type: :submit, value: 'Vyhodnotit'}
+
+      .col-lg-6
+        %h3 Vlastní pokusy
+        %p
+          Zde můžete napsat svůj program. Bude spuštěn a bude mu podstrčen zadaný vstup.
+          Výsledky pak najdete pod tímto formulářem.
+        %p
+          Počítání výsledků může chvíli trvat.
+
+        %form{method: :get, action: '/'}
+          %div
+            %label{for: :custom_code} Zdroják:
+
+          %textarea{class: 'form-control', name: :custom_code}
+            = custom_code || ""
+
+          %div
+            %label{for: :custom_input} Vstup: (čísla oddělená mezerami)
+
+          %textarea{class: 'form-control', name: :custom_input}
+            = custom_input || ""
+
+          %div.input-group
+            %label{for: :custom_limit} Časový limit (max. 10 000):
+            %input{class: 'form-control', type: :text, name: :custom_limit, value: custom_limit}
+
+          %div
+            %input{class: 'btn btn-large btn-success', type: :submit, value: 'Spustit'}
